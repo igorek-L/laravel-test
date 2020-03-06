@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
+    const ROLE_USER = 'Role_user';
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -17,4 +19,12 @@ class Role extends Model
         return $this->belongsToMany(User::class, 'user_role');
     }
 
+    /**
+     * @param $role
+     * @return mixed
+     */
+    public static function getRole($role)
+    {
+        return Role::where('role_name', $role)->get();
+    }
 }
