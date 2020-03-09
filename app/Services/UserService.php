@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Role;
@@ -20,7 +21,7 @@ class UserService
             'name' => ['required', 'string', 'min:4', 'max:20'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-             'phone' => ['required', 'unique:users', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10']
+            'phone' => ['required', 'unique:users', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10']
         ]);
     }
 
@@ -39,5 +40,13 @@ class UserService
         $user->address = $data['address'];
         $user->save();
         $user->roles()->attach(Role::getRole(Role::ROLE_USER));
+    }
+
+    public function updateUserToken(User $user, $token)
+    {
+        $user->api_token = $token;
+        $user->save();
+
+        return $user;
     }
 }
