@@ -40,13 +40,49 @@ class UserService
         $user->address = $data['address'];
         $user->save();
         $user->roles()->attach(Role::getRole(Role::ROLE_USER));
+        return $user;
     }
 
+    /**
+     * @param User $user
+     * @param $token
+     * @return User
+     */
     public function updateUserToken(User $user, $token)
     {
         $user->api_token = $token;
         $user->save();
 
         return $user;
+    }
+
+    /**
+     * @param array $credentials
+     * @return bool|void
+     */
+    public function retrieveByCredentials(array $credentials)
+    {
+        if (empty($credentials)) {
+            return;
+        }
+
+        $user = User::where('email', $credentials['email'])->first();
+
+        if ($user && $this->validatePassword($credentials, $user->getAuthPassword())) {
+            return $user;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * @param $credentials
+     * @param $password
+     * @return bool
+     */
+    private function validatePassword($credentials, $password)
+    {
+        return Hash::check($credentials['password'], $password);
     }
 }

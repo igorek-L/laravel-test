@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -16,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'address', 'phone'
+        'name', 'email', 'password', 'address', 'phone', 'api_token'
     ];
 
     /**
@@ -44,8 +43,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class, 'user_role');
     }
-    public function getRolesByToken($token)
-    {
 
+    /**
+     * @return bool
+     */
+    public function hasAdminRole()
+    {
+        $roles = $this->roles()->where('role_name',Role::ROLE_ADMIN)->get()->all();
+
+        return count($roles) > 0 ? true : false;
     }
 }

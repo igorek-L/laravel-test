@@ -48,13 +48,15 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
-        $this->validateLogin($request);
+        $user = $this->userService->retrieveByCredentials(['email' => request('email'), 'password' => request('password')]);
 
-        if ($this->attemptLogin($request)) {
-
-            $user = $this->guard()->user();
+        if (!empty($user)) {
 
             $token = $this->userTokenGenerator->generateToken();
 
@@ -65,6 +67,9 @@ class LoginController extends Controller
             ]);
         }
 
-        return $this->sendFailedLoginResponse($request);
+        return response()->json([
+            'status' => "401",
+            'message' => "Invalid user or password",
+        ]);
     }
 }
