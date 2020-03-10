@@ -72,4 +72,28 @@ class LoginController extends Controller
             'message' => "Invalid user or password",
         ]);
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout(Request $request)
+    {
+
+        if(!empty($request->user()) && !empty($request->user()->api_token)){
+             if($this->userService->logOutByToken($request->user()))
+             {
+                 return response()->json([
+                     'status' => "200",
+                     'message' => "logout successful",
+                 ]);
+             }else{
+                 return response()->json([
+                     'status' => "304",
+                     'message' => "Something went wrong please try again later",
+                 ]);
+             }
+        }
+
+    }
 }

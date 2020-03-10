@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => \App\Http\Middleware\AuthAPIMiddleware::class], function(){
     Route::post('edit','Admin\AdminController@edit')->middleware('adminRole');
+    Route::put('logout','Auth\LoginController@logout');
 });
 
 Route::post('register', 'Auth\RegisterController@register');

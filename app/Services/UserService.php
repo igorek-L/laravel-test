@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Role;
 use App\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -84,5 +85,15 @@ class UserService
     private function validatePassword($credentials, $password)
     {
         return Hash::check($credentials['password'], $password);
+    }
+
+    /**
+     * @param $user
+     * @return bool
+     */
+    public function logOutByToken($user):bool
+    {
+        return DB::table('users')
+            ->where('api_token', $user->api_token)->update(['api_token' => '']);
     }
 }
