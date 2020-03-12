@@ -30,7 +30,12 @@ class Post extends Model
     {
         return $this->belongsTo('User');
     }
-    public $uploadifyImages = [
-        'upload_cover' => ['path' => 'images/cover'],
-    ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('Comments','user_id', 'id');
+    }
 }

@@ -27,4 +27,12 @@ class Comments extends Model
     {
         return $this->belongsTo('User');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function post()
+    {
+        return $this->belongsTo('Post');
+    }
 }

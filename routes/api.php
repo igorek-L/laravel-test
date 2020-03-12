@@ -18,6 +18,7 @@ Route::group(['middleware' => \App\Http\Middleware\AuthAPIMiddleware::class], fu
     Route::put('logout','Auth\LoginController@logout');
     Route::post('create-post','Post\PostController@createPost')->middleware('userRole');
     Route::post('upload-image','Post\PostController@uploadImage')->middleware('userRole');
+    Route::post('add-comment','Comment\CommentController@create')->middleware('userRole');
 });
 
 Route::post('register', 'Auth\RegisterController@register');
