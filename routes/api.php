@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => \App\Http\Middleware\AuthAPIMiddleware::class], function(){
     Route::post('edit','Admin\AdminController@edit')->middleware('adminRole');
     Route::put('logout','Auth\LoginController@logout');
+    Route::post('create-post','Post\PostController@createPost')->middleware('userRole');
+    Route::post('upload-image','Post\PostController@uploadImage')->middleware('userRole');
 });
 
 Route::post('register', 'Auth\RegisterController@register');

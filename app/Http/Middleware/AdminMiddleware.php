@@ -2,12 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Role;
 use Closure;
-use Illuminate\Auth\TokenGuard;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;
-
 
 class AdminMiddleware
 {

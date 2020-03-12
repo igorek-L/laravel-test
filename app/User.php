@@ -45,6 +45,24 @@ class User extends Authenticatable
     }
 
     /**
+     * The posts that belong to the user
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts()
+    {
+        return $this->hasMany('Posts','user_id','id');
+    }
+
+    /**
+     * The comments that belong to the user
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('Comments','user_id','id');
+    }
+
+    /**
      * @return bool
      */
     public function hasAdminRole()
@@ -52,5 +70,15 @@ class User extends Authenticatable
         $roles = $this->roles()->where('role_name',Role::ROLE_ADMIN)->get()->all();
 
         return count($roles) > 0 ? true : false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasUserRole()
+    {
+        $roles = $this->roles()->where('role_name',Role::ROLE_USER)->first();
+
+        return !empty($roles) ? true : false;
     }
 }
