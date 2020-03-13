@@ -41,7 +41,7 @@ class PostController extends Controller
         if (!$file->isValid()) {
             return response()->json(['invalid_file_upload'], 400);
         }
-        $result = $this->mediaService->uploadImage($file);
+        $result = $this->mediaService->saveImage($file);
 
 
         return response()->json([

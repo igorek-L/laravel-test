@@ -4,21 +4,40 @@ namespace App\Services;
 
 
 use App\Post;
+use App\Services\MediaService;
 
 class PostService
 {
+    protected $mediaService;
+
+    public function __construct(
+        MediaService $mediaService
+    )
+    {
+        $this->mediaService = $mediaService;
+    }
+
     /**
      * @param $request
      * @return bool
      */
     public function createPost($request)
     {
-        $data = $request->all();
         $post = new Post();
+
+        $data = $request->all();
+
+        $file = public_path().$data['path'] . $data['image_name'];
+
+        if(file_exists($file)){
+            $this->mediaService->resizeAndSaveImageByConfig($data['path'], $data['image_name'], Post::POST_KEY_CONFIG);
+        }
+
+
         $post->title = $data['title'];
         $post->description = $data['description'];
         $post->relative_path_to_image = $data['path'];
-        $post->image = $data['image_name'];
+        $post->image = file_exists($file) ? $data['image_name']: '';
         $post->user_id = $request->user()->id;
         $post->post_status = Post::POST_STATUS_DRAFT;
 

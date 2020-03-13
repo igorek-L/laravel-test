@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    const POST_KEY_CONFIG = 'post';
+
     const POST_STATUS_DRAFT = 'POST_STATUS_DRAFT';
     const POST_STATUS_READY_FOR_REWIEW = 'POST_STATUS_READY_FOR_REVIEW';
     const POST_STATUS_PUBLISHED = 'POST_STATUS_PUBLISHED';
