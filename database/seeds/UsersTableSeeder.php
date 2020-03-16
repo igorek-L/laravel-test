@@ -14,12 +14,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name' => 'name_'.Str::random(10),
-            'email' => Str::random(10).'@gmail.com',
-            'password' => bcrypt('secret'),
-            'phone' => '+375292222222',
-            'address' => 'address'.Str::random(10),
-        ]);
+        $users = factory(App\User::class, 100000)->create();
     }
 }
