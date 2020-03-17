@@ -60,16 +60,16 @@ class PostController extends Controller
      */
     public function createPost(Request $request)
     {
-        if($this->postService->createPost($request)){
+        if ($this->postService->createPost($request)) {
 
-        return \response()->json(
-            [
-                "status" => "success",
-                "message" => "Post created",
-                "code" => 201
-            ]
-        );
-    }
+            return \response()->json(
+                [
+                    "status" => "success",
+                    "message" => "Post created",
+                    "code" => 201
+                ]
+            );
+        }
         return \response()->json(
             [
                 'status' => "304",
@@ -77,5 +77,20 @@ class PostController extends Controller
             ]
         );
 
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getPosts(Request $request)
+    {
+        $currentsPage = 1;
+        $currentsPage = $request->page;
+
+        $posts = $this->postService->getPosts($currentsPage);
+
+        // if no data will return empty array
+        return \response()->json($posts);
     }
 }

@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('login', 'Auth\LoginController@login')->name('login');
+Route::post('register', 'Auth\RegisterController@register');
+Route::get('admin', 'Admin\AdminController@index');
 
 Route::group(['middleware' => \App\Http\Middleware\AuthAPIMiddleware::class], function () {
     Route::post('edit', 'Admin\AdminController@edit')->middleware('adminRole');
@@ -19,13 +22,10 @@ Route::group(['middleware' => \App\Http\Middleware\AuthAPIMiddleware::class], fu
     Route::post('create-post', 'Post\PostController@createPost')->middleware('userRole');
     Route::post('upload-image', 'Post\PostController@uploadImage')->middleware('userRole');
     Route::post('add-comment', 'Comment\CommentController@create')->middleware('userRole');
+    Route::get('posts','Post\PostController@getPosts')->middleware('userRole');
 });
 
-Route::post('register', 'Auth\RegisterController@register');
 
-Route::post('login', 'Auth\LoginController@login')->name('login');
-
-Route::get('admin', 'Admin\AdminController@index');
 
 
 
