@@ -13,7 +13,7 @@ $factory->define(Comments::class, function (Faker $faker) {
         'comment_status' => $faker->randomElement($array = array('Ready for Review','Published', 'Removed')),
         'created_at' =>$faker->dateTimeBetween($startDate = '-10 years', $endDate = 'now', $timezone = null),
         'updated_at' =>$faker->dateTimeBetween($startDate = '-9 years', $endDate = 'now', $timezone = null),
-        'user_id' => $faker->numberBetween(1,100000),
-        'post_id' => $faker->numberBetween(1,500000),
+        'user_id' => $faker->numberBetween(1,5000),
+        'post_id' => $faker->numberBetween(1,10000),
     ];
 });

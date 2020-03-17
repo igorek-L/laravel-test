@@ -15,6 +15,6 @@ $factory->define(Post::class, function (Faker $faker) {
         'updated_at' =>$faker->dateTimeBetween($startDate = '-9 years', $endDate = 'now', $timezone = null),
         'image' => '',
         'relative_path_to_image' => '',
-        'user_id' => $faker->numberBetween(1,100000),
+        'user_id' => $faker->numberBetween(1, 5000),
     ];
 });
