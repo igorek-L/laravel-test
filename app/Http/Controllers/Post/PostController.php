@@ -122,7 +122,7 @@ class PostController extends Controller
         $postId = $request->id;
         $post = $this->postRepository->getPost($postId);
 
-        if (empty($post) || $post->first()->post_status != $this->post::POST_STATUS_PUBLISHED) {
+        if (empty($post)) {
             return \response()->json(
                 [
                     "status" => "not found",
