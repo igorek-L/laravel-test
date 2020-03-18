@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comments extends Model
 {
-    const COMMENT_STATUS_READY_FOR_REVIEW = 'COMMENT_STATUS_READY_FOR_REVIEW';
-    const COMMENT_STATUS_PUBLISHED = 'COMMENT_STATUS_PUBLISHED';
-    const COMMENT_STATUS_REMOVED = 'COMMENT_STATUS_PUBLISHED';
+    const COMMENT_STATUS_READY_FOR_REVIEW = 'READY_FOR_REVIEW';
+    const COMMENT_STATUS_PUBLISHED = 'PUBLISHED';
+    const COMMENT_STATUS_REMOVED = 'REMOVED';
 
     /**
      * The attributes that are mass assignable.
