@@ -23,6 +23,7 @@ Route::group(['middleware' => \App\Http\Middleware\AuthAPIMiddleware::class], fu
     Route::post('upload-image', 'Post\PostController@uploadImage')->middleware('userRole');
     Route::post('add-comment', 'Comment\CommentController@create')->middleware('userRole');
     Route::get('posts','Post\PostController@getPosts')->middleware('userRole');
+    Route::get('posts/{id}','Post\PostController@getPost')->middleware('userRole');
 });
 
 

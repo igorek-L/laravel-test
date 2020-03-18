@@ -6,12 +6,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\MediaService;
 use App\Services\PostService;
+use App\Repositories\PostRepository;
+use App\Repositories\CommentsRepository;
+use App\Post;
 
 class PostController extends Controller
 {
     protected $mediaService;
 
     protected $postService;
+
+    protected $postRepository;
+
+    protected $commentsRepository;
+
+    protected $post;
+
 
     /**
      * PostController constructor.
@@ -20,11 +30,17 @@ class PostController extends Controller
      */
     public function __construct(
         MediaService $mediaService,
-        PostService $postService
+        PostService $postService,
+        PostRepository $postRepository,
+        CommentsRepository $commentsRepository,
+        Post $post
     )
     {
         $this->mediaService = $mediaService;
         $this->postService = $postService;
+        $this->postRepository = $postRepository;
+        $this->commentsRepository = $commentsRepository;
+        $this->post = $post;
     }
 
     /**
@@ -80,17 +96,49 @@ class PostController extends Controller
     }
 
     /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getPosts()
+    {
+        $posts = $this->postRepository->getPosts();
+
+        if (empty($posts)) {
+            return \response()->json(
+                [
+                    "status" => "not found",
+                    "code" => 404
+                ]
+            );
+        }
+        return \response()->json($posts);
+    }
+
+    /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getPosts(Request $request)
+    public function getPost(Request $request)
     {
-        $currentsPage = 1;
-        $currentsPage = $request->page;
+        $postId = $request->id;
+        $post = $this->postRepository->getPost($postId);
 
-        $posts = $this->postService->getPosts($currentsPage);
+        if (empty($post) || $post->first()->post_status != $this->post::POST_STATUS_PUBLISHED) {
+            return \response()->json(
+                [
+                    "status" => "not found",
+                    "message" => "Post with id " . $postId . " not found or post status is not published",
+                    "code" => 404
+                ]
+            );
+        }
+        $comments = $this->commentsRepository->getComments($postId);
 
-        // if no data will return empty array
-        return \response()->json($posts);
+        return \response()->json(
+            [
+                'post' => $post->first(),
+                'comments' => $comments
+            ]
+
+        );
     }
 }

@@ -2,10 +2,7 @@
 
 namespace App\Services;
 
-
 use App\Post;
-use App\Services\MediaService;
-use Illuminate\Support\Facades\DB;
 
 class PostService
 {
@@ -46,17 +43,4 @@ class PostService
 
     }
 
-    /**
-     * @param int $pagination
-     * @return mixed
-     */
-    public function getPosts($pagination = 1)
-    {
-
-        $posts = DB::table('posts')->select('title', 'description', 'created_at')
-            ->where('post_status','Published / Declined')
-            ->orderBy('created_at','desc')->paginate(10);
-
-        return $posts->toJson(JSON_PRETTY_PRINT);
-    }
 }
