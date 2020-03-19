@@ -138,7 +138,39 @@ class PostController extends Controller
                 'post' => $post->first(),
                 'comments' => $comments
             ]
+        );
+    }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getMostCommentedPostsByYear(Request $request)
+    {
+        $year = $request->year;
+        if (empty($year)) {
+            return \response()->json(
+                [
+                    "status" => "not found",
+                    "messsage" => 'Request not valid',
+                    "code" => 404
+                ]
+            );
+        }
+
+        $posts = $this->postRepository->getMostCommentedPostsByYear($year);
+        if (empty($posts->first())) {
+            return \response()->json(
+                [
+                    "status" => "not found",
+                    "code" => 404
+                ]
+            );
+        }
+        return \response()->json(
+            [
+                'posts' => $posts
+            ]
         );
     }
 }

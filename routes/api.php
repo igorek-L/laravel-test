@@ -23,7 +23,11 @@ Route::group(['middleware' => \App\Http\Middleware\AuthAPIMiddleware::class], fu
     Route::post('upload-image', 'Post\PostController@uploadImage')->middleware('userRole');
     Route::post('add-comment', 'Comment\CommentController@create')->middleware('userRole');
     Route::get('posts','Post\PostController@getPosts')->middleware('userRole');
+    Route::get('posts/mostcommented','Post\PostController@getMostCommentedPostsByYear')->middleware('userRole');
     Route::get('posts/{id}','Post\PostController@getPost')->middleware('userRole');
+    Route::get('/user/{userId}/posts','Post\UserPostController@getPosts')->middleware('userRole');
+    Route::get('/user/{userId}/mostcommented','Post\UserPostController@getMostCommentedPostsByYear')->middleware('userRole');
+
 });
 
 
