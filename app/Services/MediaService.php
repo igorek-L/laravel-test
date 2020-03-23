@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -28,6 +27,10 @@ class MediaService
         }
     }
 
+    /**
+     * @param $file
+     * @return array
+     */
     public function saveImage($file)
     {
         $folderFormat = date('Y/m/d');
@@ -52,7 +55,6 @@ class MediaService
      */
     public function generateNewFileName()
     {
-
         return Str::random(40);
     }
 
@@ -80,8 +82,6 @@ class MediaService
      */
     public function getExtension($file)
     {
-
         return pathinfo($file->getClientOriginalName())['extension'];
     }
-
 }

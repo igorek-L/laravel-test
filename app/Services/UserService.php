@@ -41,6 +41,7 @@ class UserService
         $user->address = $data['address'];
         $user->save();
         $user->roles()->attach(Role::getRole(Role::ROLE_USER));
+
         return $user;
     }
 

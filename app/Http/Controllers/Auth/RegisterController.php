@@ -8,7 +8,6 @@ use App\Services\UserService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 
-
 class RegisterController extends Controller
 {
     /*
@@ -24,6 +23,9 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
+    /**
+     * @var UserService
+     */
     private $userService;
 
     /**
@@ -60,5 +62,4 @@ class RegisterController extends Controller
             ]
         );
     }
-
 }

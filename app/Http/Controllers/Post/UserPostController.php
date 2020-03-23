@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Http\Controllers\Post;
-
 
 use App\Http\Controllers\Controller;
 use App\Repositories\PostRepository;
@@ -11,9 +9,21 @@ use Illuminate\Http\Request;
 
 class UserPostController extends Controller
 {
+    /**
+     * @var PostRepository
+     */
     protected $postRepository;
+
+    /**
+     * @var UserRepository
+     */
     protected $userRepository;
 
+    /**
+     * UserPostController constructor.
+     * @param PostRepository $repository
+     * @param UserRepository $userRepository
+     */
     public function __construct(
         PostRepository $repository,
         UserRepository $userRepository
@@ -30,6 +40,7 @@ class UserPostController extends Controller
     public function getPosts($userId)
     {
         $user = $this->userRepository->getUserById($userId);
+
         if (empty($user)) {
             return \response()->json(
                 [
@@ -62,6 +73,7 @@ class UserPostController extends Controller
     public function getMostCommentedPostsByYear(Request $request, $userId)
     {
         $user = $this->userRepository->getUserById($userId);
+
         if (empty($user)) {
             return \response()->json(
                 [
@@ -71,8 +83,10 @@ class UserPostController extends Controller
                 ]
             );
         }
+
         $year = $request->year;
-        $posts = $this->postRepository->getMostCommentedPostsByYearForUser($userId,$year);
+
+        $posts = $this->postRepository->getMostCommentedPostsByYearForUser($userId, $year);
 
         if (empty($posts->first())) {
             return \response()->json(
@@ -82,6 +96,7 @@ class UserPostController extends Controller
                 ]
             );
         }
+
         return \response()->json(
             [
                 'Author' => [
@@ -92,7 +107,5 @@ class UserPostController extends Controller
                 'posts' => $posts,
             ]
         );
-
     }
-
 }

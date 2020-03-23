@@ -16,7 +16,6 @@ class UserMiddleware
     public function handle($request, Closure $next)
     {
         if (!$request->user()->hasUserRole()) {
-
             return \response()->json(
                 [
                     "status" => "forbiden",

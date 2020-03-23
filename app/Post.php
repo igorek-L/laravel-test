@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-
 class Post extends Model
 {
     const POST_KEY_CONFIG = 'post';
@@ -38,6 +37,6 @@ class Post extends Model
      */
     public function comments()
     {
-        return $this->hasMany('Comments','user_id', 'id');
+        return $this->hasMany('Comments', 'user_id', 'id');
     }
 }

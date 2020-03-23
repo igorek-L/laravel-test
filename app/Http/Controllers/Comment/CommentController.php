@@ -26,7 +26,6 @@ class CommentController extends Controller
     public function create(Request $request)
     {
         if($this->commentsService->addComment($request)){
-
             return \response()->json(
                 [
                     "status" => "success",
@@ -35,6 +34,7 @@ class CommentController extends Controller
                 ]
             );
         }
+
         return \response()->json(
             [
                 'status' => "304",
@@ -42,5 +42,4 @@ class CommentController extends Controller
             ]
         );
     }
-
 }

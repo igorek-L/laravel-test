@@ -31,6 +31,9 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    /**
+     * @var UserTokenGenerator
+     */
     protected $userTokenGenerator;
 
     /**
@@ -79,21 +82,18 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-
-        if(!empty($request->user()) && !empty($request->user()->api_token)){
-             if($this->userService->logOutByToken($request->user()))
-             {
-                 return response()->json([
-                     'status' => "200",
-                     'message' => "logout successful",
-                 ]);
-             }else{
-                 return response()->json([
-                     'status' => "304",
-                     'message' => "Something went wrong please try again later",
-                 ]);
-             }
+        if (!empty($request->user()) && !empty($request->user()->api_token)) {
+            if ($this->userService->logOutByToken($request->user())) {
+                return response()->json([
+                    'status' => "200",
+                    'message' => "logout successful",
+                ]);
+            } else {
+                return response()->json([
+                    'status' => "304",
+                    'message' => "Something went wrong please try again later",
+                ]);
+            }
         }
-
     }
 }

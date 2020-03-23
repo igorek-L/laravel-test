@@ -16,7 +16,6 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         if (!$request->user()->hasAdminRole()) {
-
             return \response()->json(
                 [
                     "status" => "forbiden",

@@ -7,13 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class PostRepository
 {
-
     /**
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getPosts()
     {
-
         return $posts = DB::table('posts')->select('title', 'description', 'created_at')
             ->where('post_status', Post::POST_STATUS_PUBLISHED)
             ->orderBy('created_at', 'desc')->paginate(10);
@@ -26,6 +24,7 @@ class PostRepository
     public function getPost($postId)
     {
         $postStatus = $this->checkIsPostPublishedById($postId);
+
         if ($postStatus) {
             return $post = DB::table('posts')
                 ->leftJoin('users', 'users.id', '=', 'posts.user_id')
@@ -45,8 +44,7 @@ class PostRepository
      */
     public function checkIsPostPublishedById($postId)
     {
-        return
-            Post::POST_STATUS_PUBLISHED == DB::table('posts')
+        return Post::POST_STATUS_PUBLISHED == DB::table('posts')
                 ->select('post_status')
                 ->where('id', $postId)->get()->first()->post_status ? true : false;
     }
@@ -90,7 +88,6 @@ class PostRepository
             ->groupBy('posts.id', 'users.id')
             ->orderBy('number_of_comments', 'desc')
             ->get();
-
     }
 
     /**

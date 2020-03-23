@@ -12,16 +12,30 @@ use App\Post;
 
 class PostController extends Controller
 {
+    /**
+     * @var MediaService
+     */
     protected $mediaService;
 
+    /**
+     * @var PostService
+     */
     protected $postService;
 
+    /**
+     * @var PostRepository
+     */
     protected $postRepository;
 
+    /**
+     * @var CommentsRepository
+     */
     protected $commentsRepository;
 
+    /**
+     * @var Post
+     */
     protected $post;
-
 
     /**
      * PostController constructor.
@@ -49,16 +63,17 @@ class PostController extends Controller
      */
     public function uploadImage(Request $request)
     {
-
         if (!$request->hasFile('image')) {
             return response()->json(['upload_file_not_found'], 400);
         }
+
         $file = $request->file('image');
+
         if (!$file->isValid()) {
             return response()->json(['invalid_file_upload'], 400);
         }
-        $result = $this->mediaService->saveImage($file);
 
+        $result = $this->mediaService->saveImage($file);
 
         return response()->json([
             'status' => "200",
@@ -66,8 +81,6 @@ class PostController extends Controller
             'path' => $result['path'],
             'image_name' => $result['image'],
         ]);
-
-
     }
 
     /**
@@ -77,7 +90,6 @@ class PostController extends Controller
     public function createPost(Request $request)
     {
         if ($this->postService->createPost($request)) {
-
             return \response()->json(
                 [
                     "status" => "success",
@@ -86,13 +98,13 @@ class PostController extends Controller
                 ]
             );
         }
+
         return \response()->json(
             [
                 'status' => "304",
                 'message' => "Something went wrong please try again later",
             ]
         );
-
     }
 
     /**
@@ -110,6 +122,7 @@ class PostController extends Controller
                 ]
             );
         }
+
         return \response()->json($posts);
     }
 
@@ -120,6 +133,7 @@ class PostController extends Controller
     public function getPost(Request $request)
     {
         $postId = $request->id;
+
         $post = $this->postRepository->getPost($postId);
 
         if (empty($post)) {
@@ -131,6 +145,7 @@ class PostController extends Controller
                 ]
             );
         }
+
         $comments = $this->commentsRepository->getComments($postId);
 
         return \response()->json(
@@ -148,6 +163,7 @@ class PostController extends Controller
     public function getMostCommentedPostsByYear(Request $request)
     {
         $year = $request->year;
+
         if (empty($year)) {
             return \response()->json(
                 [
@@ -159,6 +175,7 @@ class PostController extends Controller
         }
 
         $posts = $this->postRepository->getMostCommentedPostsByYear($year);
+
         if (empty($posts->first())) {
             return \response()->json(
                 [
@@ -167,6 +184,7 @@ class PostController extends Controller
                 ]
             );
         }
+
         return \response()->json(
             [
                 'posts' => $posts

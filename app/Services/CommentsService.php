@@ -22,6 +22,5 @@ class CommentsService
         $comment->post_id = $data['post_id'];
 
         return $comment->save() ? true : false;
-
     }
 }
