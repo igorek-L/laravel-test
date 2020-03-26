@@ -16,7 +16,7 @@ Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('register', 'Auth\RegisterController@register');
 Route::get('admin', 'Admin\AdminController@index');
 
-Route::group(['middleware' => \App\Http\Middleware\AuthAPIMiddleware::class], function () {
+Route::group(['middleware' => 'AuthAPI'], function () {
     Route::put('logout', 'Auth\LoginController@logout');
     Route::post('edit', 'Admin\AdminController@edit')->middleware('adminRole');
     Route::post('create-post', 'Post\PostController@createPost')->middleware('userRole');

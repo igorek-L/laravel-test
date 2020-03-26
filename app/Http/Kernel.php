@@ -27,7 +27,6 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            //\App\Http\Middleware\AuthAPIMiddleware::class,
         ],
     ];
 
@@ -49,6 +48,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'adminRole' => \App\Http\Middleware\AdminMiddleware::class,
         'userRole' => \App\Http\Middleware\UserMiddleware::class,
+        'AuthAPI' => \App\Http\Middleware\AuthAPIMiddleware::class,
     ];
 
     /**

@@ -49,7 +49,6 @@ class RegisterController extends Controller
         UserService $userService
     )
     {
-        // $this->middleware('guest');
         $this->userService = $userService;
     }
 
