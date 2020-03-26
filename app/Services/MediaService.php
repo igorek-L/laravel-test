@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
+/**
+ * Class MediaService
+ * @package App\Services
+ */
 class MediaService
 {
     /**
@@ -13,7 +17,7 @@ class MediaService
      * @param $name
      * @param $configKey
      */
-    public function resizeAndSaveImageByConfig($path, $name, $configKey)
+    public function resizeAndSaveImageByConfig($path, $name, $configKey): void
     {
         // resize and save  image
         $fileExtension = pathinfo($name)['extension'];
@@ -31,7 +35,7 @@ class MediaService
      * @param $file
      * @return array
      */
-    public function saveImage($file)
+    public function saveImage($file): array
     {
         $folderFormat = date('Y/m/d');
 
@@ -53,7 +57,7 @@ class MediaService
     /**
      * @return string
      */
-    public function generateNewFileName()
+    public function generateNewFileName(): string
     {
         return Str::random(40);
     }
@@ -62,7 +66,7 @@ class MediaService
      * @param $folderFormat
      * @return string
      */
-    public function getRelativePath($folderFormat)
+    public function getRelativePath($folderFormat): string
     {
         return '/images/' . $folderFormat . '/';
     }
@@ -71,16 +75,16 @@ class MediaService
      * @param $folderFormat
      * @return string
      */
-    public function getAbsolutePath($folderFormat)
+    public function getAbsolutePath($folderFormat): string
     {
         return public_path() . '/images/' . $folderFormat . '/';
     }
 
     /**
      * @param $file
-     * @return mixed|string
+     * @return string
      */
-    public function getExtension($file)
+    public function getExtension($file): string
     {
         return pathinfo($file->getClientOriginalName())['extension'];
     }

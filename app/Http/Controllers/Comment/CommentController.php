@@ -6,6 +6,10 @@ use App\Services\CommentsService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+ * Class CommentController
+ * @package App\Http\Controllers\Comment
+ */
 class CommentController extends Controller
 {
     /**
@@ -25,7 +29,7 @@ class CommentController extends Controller
      */
     public function create(Request $request)
     {
-        if($this->commentsService->addComment($request)){
+        if ($this->commentsService->addComment($request)) {
             return \response()->json(
                 [
                     "status" => "success",

@@ -4,6 +4,10 @@ namespace App\Services;
 
 use App\Post;
 
+/**
+ * Class PostService
+ * @package App\Services
+ */
 class PostService
 {
     /**
@@ -26,7 +30,7 @@ class PostService
      * @param $request
      * @return bool
      */
-    public function createPost($request)
+    public function createPost($request): bool
     {
         $post = new Post();
 

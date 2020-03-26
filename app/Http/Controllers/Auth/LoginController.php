@@ -9,6 +9,10 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Services\UserTokenGenerator;
 
+/**
+ * Class LoginController
+ * @package App\Http\Controllers\Auth
+ */
 class LoginController extends Controller
 {
     /*
@@ -48,7 +52,6 @@ class LoginController extends Controller
     {
         $this->userService = $userService;
         $this->userTokenGenerator = $userTokenGenerator;
-        $this->middleware('guest')->except('logout');
     }
 
     /**

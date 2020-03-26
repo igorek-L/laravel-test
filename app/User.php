@@ -5,6 +5,10 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * Class User
+ * @package App
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -50,7 +54,7 @@ class User extends Authenticatable
      */
     public function posts()
     {
-        return $this->hasMany('Posts','user_id','id');
+        return $this->hasMany('Posts', 'user_id', 'id');
     }
 
     /**
@@ -59,15 +63,15 @@ class User extends Authenticatable
      */
     public function comments()
     {
-        return $this->hasMany('Comments','user_id','id');
+        return $this->hasMany('Comments', 'user_id', 'id');
     }
 
     /**
      * @return bool
      */
-    public function hasAdminRole()
+    public function hasAdminRole(): bool
     {
-        $roles = $this->roles()->where('role_name',Role::ROLE_ADMIN)->get()->all();
+        $roles = $this->roles()->where('role_name', Role::ROLE_ADMIN)->get()->all();
 
         return count($roles) > 0 ? true : false;
     }
@@ -75,9 +79,9 @@ class User extends Authenticatable
     /**
      * @return bool
      */
-    public function hasUserRole()
+    public function hasUserRole(): bool
     {
-        $roles = $this->roles()->where('role_name',Role::ROLE_USER)->first();
+        $roles = $this->roles()->where('role_name', Role::ROLE_USER)->first();
 
         return !empty($roles) ? true : false;
     }

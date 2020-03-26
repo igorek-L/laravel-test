@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\MediaService;
-use App\Services\PostService;
-use App\Repositories\PostRepository;
-use App\Repositories\CommentsRepository;
+use App\Services\{PostService, MediaService};
+use App\Repositories\{PostRepository, CommentsRepository};
 use App\Post;
 
+/**
+ * Class PostController
+ * @package App\Http\Controllers\Post
+ */
 class PostController extends Controller
 {
     /**

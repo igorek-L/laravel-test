@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
-use App\Role;
-use App\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use App\{Role, User};
+use Illuminate\Support\Facades\{DB, Hash, Validator};
 
+/**
+ * Class UserService
+ * @package App\Services
+ */
 class UserService
 {
     /**
@@ -21,7 +22,7 @@ class UserService
         return Validator::make($data, [
             'name' => ['required', 'string', 'min:4', 'max:20'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
             'phone' => ['required', 'unique:users', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10']
         ]);
     }
@@ -30,6 +31,7 @@ class UserService
      * Create a new user instance after a valid registration.
      *
      * @param $data
+     * @return User
      */
     public function registerUser($data)
     {
@@ -83,7 +85,7 @@ class UserService
      * @param $password
      * @return bool
      */
-    private function validatePassword($credentials, $password)
+    private function validatePassword($credentials, $password): bool
     {
         return Hash::check($credentials['password'], $password);
     }
@@ -92,7 +94,7 @@ class UserService
      * @param $user
      * @return bool
      */
-    public function logOutByToken($user):bool
+    public function logOutByToken($user): bool
     {
         return DB::table('users')
             ->where('api_token', $user->api_token)->update(['api_token' => '']);

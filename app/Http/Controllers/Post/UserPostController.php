@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\PostRepository;
-use App\Repositories\UserRepository;
+use App\Repositories\{PostRepository, UserRepository};
 use Illuminate\Http\Request;
 
+/**
+ * Class UserPostController
+ * @package App\Http\Controllers\Post
+ */
 class UserPostController extends Controller
 {
     /**

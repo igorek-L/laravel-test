@@ -5,6 +5,10 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class AuthAPIMiddleware
+ * @package App\Http\Middleware
+ */
 class AuthAPIMiddleware
 {
     /**

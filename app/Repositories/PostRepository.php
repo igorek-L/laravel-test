@@ -5,6 +5,10 @@ namespace App\Repositories;
 use App\Post;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class PostRepository
+ * @package App\Repositories
+ */
 class PostRepository
 {
     /**
@@ -18,10 +22,10 @@ class PostRepository
     }
 
     /**
-     * @param $postId
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Query\Builder|object|null
+     * @param int $postId
+     * @return bool|\Illuminate\Support\Collection
      */
-    public function getPost($postId)
+    public function getPost(int $postId)
     {
         $postStatus = $this->checkIsPostPublishedById($postId);
 
@@ -39,21 +43,21 @@ class PostRepository
     }
 
     /**
-     * @param $postId
+     * @param int $postId
      * @return bool
      */
-    public function checkIsPostPublishedById($postId)
+    public function checkIsPostPublishedById(int $postId): bool
     {
         return Post::POST_STATUS_PUBLISHED == DB::table('posts')
-                ->select('post_status')
-                ->where('id', $postId)->get()->first()->post_status ? true : false;
+            ->select('post_status')
+            ->where('id', $postId)->get()->first()->post_status ? true : false;
     }
 
     /**
-     * @param $userId
+     * @param int $userId
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getAllPablishedPostsByUserId($userId)
+    public function getAllPablishedPostsByUserId(int $userId)
     {
         return DB::table('posts')->select(
             'id', 'title', 'description', 'post_status',
@@ -66,11 +70,11 @@ class PostRepository
     }
 
     /**
-     * @param $userId
+     * @param int $userId
      * @param $year
      * @return \Illuminate\Support\Collection
      */
-    public function getMostCommentedPostsByYearForUser($userId, $year)
+    public function getMostCommentedPostsByYearForUser(int $userId, $year)
     {
         return DB::table('posts')
             ->Join('users', 'users.id', '=', 'posts.user_id')

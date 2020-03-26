@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Exception;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Services\UserService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 
+/**
+ * Class RegisterController
+ * @package App\Http\Controllers\Auth
+ */
 class RegisterController extends Controller
 {
     /*
@@ -44,13 +49,25 @@ class RegisterController extends Controller
         UserService $userService
     )
     {
-        $this->middleware('guest');
+        // $this->middleware('guest');
         $this->userService = $userService;
     }
 
     public function register(Request $request)
     {
-        $this->userService->validator($request->all())->validate();
+        try {
+            $this->userService->validator($request->all())->validate();
+        } catch (Exception $e) {
+            report($e);
+            return \response()->json(
+                [
+                    "status" => "Unprocessable Entity",
+                    "message" => $e->getMessage(),
+                    "code" => $e->status
+                ]
+            );
+        }
+
 
         $this->userService->registerUser($request);
 

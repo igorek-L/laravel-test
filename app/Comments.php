@@ -4,6 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Comments
+ * @package App
+ */
 class Comments extends Model
 {
     const COMMENT_STATUS_READY_FOR_REVIEW = 'READY_FOR_REVIEW';

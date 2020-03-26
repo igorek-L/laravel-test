@@ -4,6 +4,10 @@ namespace App\Repositories;
 
 use App\User;
 
+/**
+ * Class UserRepository
+ * @package App\Repositories
+ */
 class UserRepository
 {
     /**
@@ -23,11 +27,11 @@ class UserRepository
     }
 
     /**
-     * @param $userId
-     * @return mixed
+     * @param int $userId
+     * @return object
      */
-    public function getUserById($userId)
+    public function getUserById(int $userId): object
     {
-        return $this->user->select()->where('id',$userId)->get()->first();
+        return $this->user->select()->where('id', $userId)->get()->first();
     }
 }

@@ -4,6 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Post
+ * @package App
+ */
 class Post extends Model
 {
     const POST_KEY_CONFIG = 'post';

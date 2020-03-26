@@ -5,13 +5,17 @@ namespace App\Services;
 use App\Comments;
 use Illuminate\Http\Request;
 
+/**
+ * Class CommentsService
+ * @package App\Services
+ */
 class CommentsService
 {
     /**
      * @param Request $request
      * @return bool
      */
-    public function addComment(Request $request)
+    public function addComment(Request $request): bool
     {
         $data = $request->all();
 
