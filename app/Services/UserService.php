@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\{Role, User};
-use Illuminate\Support\Facades\{DB, Hash, Validator};
+use Illuminate\Support\Facades\{DB, Hash};
 
 /**
  * Class UserService
@@ -12,28 +12,11 @@ use Illuminate\Support\Facades\{DB, Hash, Validator};
 class UserService
 {
     /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param array $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    public function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'min:4', 'max:20'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
-            'phone' => ['required', 'unique:users', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10']
-        ]);
-    }
-
-    /**
      * Create a new user instance after a valid registration.
-     *
-     * @param $data
+     * @param array $data
      * @return User
      */
-    public function registerUser($data)
+    public function registerUser(array $data): User
     {
         $user = new User();
         $user->name = $data['name'];
@@ -52,7 +35,7 @@ class UserService
      * @param $token
      * @return User
      */
-    public function updateUserToken(User $user, $token)
+    public function updateUserToken(User $user, string $token)
     {
         $user->api_token = $token;
         $user->save();
@@ -62,12 +45,12 @@ class UserService
 
     /**
      * @param array $credentials
-     * @return bool|void
+     * @return User|null
      */
-    public function retrieveByCredentials(array $credentials)
+    public function retrieveByCredentials(array $credentials): ?User
     {
         if (empty($credentials)) {
-            return;
+            return null;
         }
 
         $user = User::where('email', $credentials['email'])->first();
@@ -75,9 +58,8 @@ class UserService
         if ($user && $this->validatePassword($credentials, $user->getAuthPassword())) {
             return $user;
         } else {
-            return false;
+            return null;
         }
-
     }
 
     /**
