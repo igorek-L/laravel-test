@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Services\UserTokenGenerator;
 
 /**
@@ -15,30 +13,15 @@ use App\Services\UserTokenGenerator;
  */
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
-    use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
     /**
      * @var UserTokenGenerator
      */
     protected $userTokenGenerator;
+
+    /**
+     * @var UserService
+     */
+    protected $userService;
 
     /**
      * Create a new controller instance.
@@ -74,7 +57,7 @@ class LoginController extends Controller
         }
 
         return response()->json([
-            'status' => "401",
+            'status' => 401,
             'message' => "Invalid user or password",
         ]);
     }
@@ -88,12 +71,12 @@ class LoginController extends Controller
         if (!empty($request->user()) && !empty($request->user()->api_token)) {
             if ($this->userService->logOutByToken($request->user())) {
                 return response()->json([
-                    'status' => "200",
+                    'status' => 200,
                     'message' => "logout successful",
                 ]);
             } else {
                 return response()->json([
-                    'status' => "304",
+                    'status' => 304,
                     'message' => "Something went wrong please try again later",
                 ]);
             }

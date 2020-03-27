@@ -13,6 +13,11 @@ use App\Http\Controllers\Controller;
 class CommentController extends Controller
 {
     /**
+     * @var CommentsService
+     */
+    protected $commentsService;
+
+    /**
      * CommentController constructor.
      * @param CommentsService $commentsService
      */
@@ -41,7 +46,7 @@ class CommentController extends Controller
 
         return \response()->json(
             [
-                'status' => "304",
+                'status' => 304,
                 'message' => "Something went wrong please try again later",
             ]
         );

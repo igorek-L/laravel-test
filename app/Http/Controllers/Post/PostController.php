@@ -78,7 +78,7 @@ class PostController extends Controller
         $result = $this->mediaService->saveImage($file);
 
         return response()->json([
-            'status' => "200",
+            'status' => 200,
             'message' => "Image uploaded successfully",
             'path' => $result['path'],
             'image_name' => $result['image'],
@@ -103,7 +103,7 @@ class PostController extends Controller
 
         return \response()->json(
             [
-                'status' => "304",
+                'status' => 304,
                 'message' => "Something went wrong please try again later",
             ]
         );

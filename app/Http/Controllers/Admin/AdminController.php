@@ -18,7 +18,7 @@ class AdminController extends Controller
     public function edit(Request $request)
     {
         return response()->json([
-            'status' => "200",
+            'status' => 200,
             'message' => "Has Admin Role",
         ]);
     }
