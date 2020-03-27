@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Exception;
+use App\Http\Requests\RegisterUser;
 use App\Http\Controllers\Controller;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -34,22 +34,11 @@ class RegisterController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request)
+    public function register(RegisterUser $request)
     {
-        try {
-            $this->userService->validator($request->all())->validate();
-        } catch (Exception $e) {
-            report($e);
-            return \response()->json(
-                [
-                    "status" => "Unprocessable Entity",
-                    "message" => $e->getMessage(),
-                    "code" => $e->status
-                ]
-            );
-        }
+        $validated = $request->validated();
 
-        $this->userService->registerUser($request);
+        $this->userService->registerUser($validated);
 
         return \response()->json(
             [
