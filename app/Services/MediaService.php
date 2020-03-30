@@ -13,11 +13,11 @@ use Intervention\Image\Facades\Image;
 class MediaService
 {
     /**
-     * @param $path
-     * @param $name
-     * @param $configKey
+     * @param string $path
+     * @param string $name
+     * @param string $configKey
      */
-    public function resizeAndSaveImageByConfig($path, $name, $configKey): void
+    public function resizeAndSaveImageByConfig(string $path, string $name, string $configKey): void
     {
         // resize and save  image
         $fileExtension = pathinfo($name)['extension'];
