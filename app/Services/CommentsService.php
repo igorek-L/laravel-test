@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Comments;
-use Illuminate\Http\Request;
+use App\Http\Requests\CreatePostCommentRequest;
 
 /**
  * Class CommentsService
@@ -12,10 +12,10 @@ use Illuminate\Http\Request;
 class CommentsService
 {
     /**
-     * @param Request $request
+     * @param CreatePostCommentRequest $request
      * @return bool
      */
-    public function addComment(Request $request): bool
+    public function addComment(CreatePostCommentRequest $request): bool
     {
         $data = $request->all();
 

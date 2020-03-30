@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Comment;
 
+use App\Http\Requests\CreatePostCommentRequest;
 use App\Services\CommentsService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,10 +30,10 @@ class CommentController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param CreatePostCommentRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function create(Request $request)
+    public function create(CreatePostCommentRequest $request)
     {
         if ($this->commentsService->addComment($request)) {
             return \response()->json(

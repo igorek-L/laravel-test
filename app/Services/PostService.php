@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\CreatePostRequest;
 use App\Post;
 
 /**
@@ -27,25 +28,26 @@ class PostService
     }
 
     /**
-     * @param $request
+     * @param CreatePostRequest $request
      * @return bool
      */
-    public function createPost($request): bool
+    public function createPost(CreatePostRequest $request): bool
     {
         $post = new Post();
 
         $data = $request->all();
 
-        $file = public_path() . $data['path'] . $data['image_name'];
-
-        if (file_exists($file)) {
+        if (!empty($data['path']) && !empty($data['image_name'])) {
+            $file = public_path() . $data['path'] . $data['image_name'];
+        }
+        if (isset($file) && file_exists($file)) {
             $this->mediaService->resizeAndSaveImageByConfig($data['path'], $data['image_name'], Post::POST_KEY_CONFIG);
+            $post->image = $data['image_name'];
+            $post->relative_path_to_image = $data['path'];
         }
 
         $post->title = $data['title'];
         $post->description = $data['description'];
-        $post->relative_path_to_image = $data['path'];
-        $post->image = file_exists($file) ? $data['image_name'] : '';
         $post->user_id = $request->user()->id;
         $post->post_status = Post::POST_STATUS_DRAFT;
 

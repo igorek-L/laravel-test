@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\{Role, User};
 use Illuminate\Support\Facades\{DB, Hash};
+use App\Http\Requests\RegisterUserRequest;
 
 /**
  * Class UserService
@@ -13,10 +14,10 @@ class UserService
 {
     /**
      * Create a new user instance after a valid registration.
-     * @param array $data
+     * @param RegisterUserRequest $data
      * @return User
      */
-    public function registerUser(array $data): User
+    public function registerUser(RegisterUserRequest $data): User
     {
         $user = new User();
         $user->name = $data['name'];
@@ -35,7 +36,7 @@ class UserService
      * @param $token
      * @return User
      */
-    public function updateUserToken(User $user, string $token)
+    public function updateUserToken(User $user, string $token): User
     {
         $user->api_token = $token;
         $user->save();
@@ -49,10 +50,6 @@ class UserService
      */
     public function retrieveByCredentials(array $credentials): ?User
     {
-        if (empty($credentials)) {
-            return null;
-        }
-
         $user = User::where('email', $credentials['email'])->first();
 
         if ($user && $this->validatePassword($credentials, $user->getAuthPassword())) {

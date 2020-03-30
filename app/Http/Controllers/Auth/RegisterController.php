@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Requests\RegisterUser;
+use App\Http\Requests\RegisterUserRequest;
 use App\Http\Controllers\Controller;
 use App\Services\UserService;
-use Illuminate\Http\Request;
 
 /**
  * Class RegisterController
@@ -31,14 +30,12 @@ class RegisterController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param RegisterUserRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(RegisterUser $request)
+    public function register(RegisterUserRequest $request)
     {
-        $validated = $request->validated();
-
-        $this->userService->registerUser($validated);
+        $this->userService->registerUser($request);
 
         return \response()->json(
             [

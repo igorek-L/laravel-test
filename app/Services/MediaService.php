@@ -21,8 +21,8 @@ class MediaService
     {
         // resize and save  image
         $fileExtension = pathinfo($name)['extension'];
-        $fileName =  pathinfo($name)['filename'];
-        $absolutePath = public_path().$path;
+        $fileName = pathinfo($name)['filename'];
+        $absolutePath = public_path() . $path;
 
         foreach (app('config')->get('imageSizes')[$configKey] as $key => $value) {
             $newFileName = $fileName . '_' . $key . '_' . $value['width'] . 'x' . $value['height'] . '.' . $fileExtension;
@@ -32,10 +32,10 @@ class MediaService
     }
 
     /**
-     * @param $file
+     * @param object $file
      * @return array
      */
-    public function saveImage($file): array
+    public function saveImage(object $file): array
     {
         $folderFormat = date('Y/m/d');
 

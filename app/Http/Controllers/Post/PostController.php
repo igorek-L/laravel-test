@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreatePostRequest;
+use App\Http\Requests\UploadPostImageRequest;
 use Illuminate\Http\Request;
 use App\Services\{PostService, MediaService};
 use App\Repositories\{PostRepository, CommentsRepository};
@@ -60,20 +62,12 @@ class PostController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param UploadPostImageRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function uploadImage(Request $request)
+    public function uploadImage(UploadPostImageRequest $request)
     {
-        if (!$request->hasFile('image')) {
-            return response()->json(['upload_file_not_found'], 400);
-        }
-
         $file = $request->file('image');
-
-        if (!$file->isValid()) {
-            return response()->json(['invalid_file_upload'], 400);
-        }
 
         $result = $this->mediaService->saveImage($file);
 
@@ -86,10 +80,10 @@ class PostController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param CreatePostRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function createPost(Request $request)
+    public function createPost(CreatePostRequest $request)
     {
         if ($this->postService->createPost($request)) {
             return \response()->json(
